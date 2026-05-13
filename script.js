@@ -121,7 +121,7 @@
   };
   imgBird.onerror = function () {
     birdOk = false;
-    console.warn("Não foi possível carregar Sprites/bird.png — usando desenho reserva.");
+    console.warn("Não foi possível carregar Sprites/Bird.png — usando desenho reserva.");
   };
   imgBird.src = "Sprites/Bird.png";
 
