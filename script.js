@@ -123,7 +123,7 @@
     birdOk = false;
     console.warn("Não foi possível carregar Sprites/bird.png — usando desenho reserva.");
   };
-  imgBird.src = "Sprites/bird.png";
+  imgBird.src = "Sprites/Bird.png";
 
   // Cano de baixo: o que sai do chão para cima.
   imgPipe.onload = function () {
