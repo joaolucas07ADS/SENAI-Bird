@@ -121,9 +121,9 @@
   };
   imgBird.onerror = function () {
     birdOk = false;
-    console.warn("Não foi possível carregar Sprites/Bird.png — usando desenho reserva.");
+    console.warn("Não foi possível carregar Sprites/bird.png — usando desenho reserva.");
   };
-  imgBird.src = "Sprites/Bird.png";
+  imgBird.src = "Sprites/bird.png";
 
   // Cano de baixo: o que sai do chão para cima.
   imgPipe.onload = function () {
@@ -529,7 +529,9 @@
   }
 
   // ---------------------------------------------------------------------------
-  // BLOCO: OUVIR CLIQUE DO MOUSE NO CANVAS
+  // BLOCO: OUVIR CLIQUE / TOQUE NO CANVAS (DURANTE A PARTIDA)
+  // A telinha de início fica POR CIMA do canvas, então o clique não chega aqui
+  // enquanto o overlay estiver visível — por isso existe o bloco logo abaixo.
   // ---------------------------------------------------------------------------
   canvas.addEventListener("mousedown", function (e) {
     e.preventDefault();
@@ -537,7 +539,7 @@
   });
 
   // ---------------------------------------------------------------------------
-  // BLOCO: OUVIR TOQUE NA TELA (CELULAR OU TABLET)
+  // BLOCO: OUVIR TOQUE NA TELA NO CANVAS (CELULAR OU TABLET)
   // ---------------------------------------------------------------------------
   canvas.addEventListener(
     "touchstart",
@@ -546,6 +548,32 @@
       flap();
     },
     { passive: false }
+  );
+
+  // ---------------------------------------------------------------------------
+  // BLOCO: CLICAR / TOCAR NA TELA DE INÍCIO (OVERLAY POR CIMA DO CANVAS)
+  // pointerdown + touchstart: alguns WebViews/Safari não disparam pointer
+  // de forma confiável em div; touchstart cobre. Evita dois pulos no mesmo
+  // frame com um trava-curto.
+  // ---------------------------------------------------------------------------
+  let startOverlayInputLock = false;
+  function onStartOverlayInput(e) {
+    if (startOverlay.classList.contains("overlay--hidden")) return;
+    if (startOverlayInputLock) return;
+    startOverlayInputLock = true;
+    if (e.cancelable) e.preventDefault();
+    flap();
+    window.setTimeout(function () {
+      startOverlayInputLock = false;
+    }, 0);
+  }
+  startOverlay.addEventListener("pointerdown", onStartOverlayInput, {
+    passive: false,
+  });
+  startOverlay.addEventListener(
+    "touchstart",
+    onStartOverlayInput,
+    { passive: false, capture: true }
   );
 
   // ---------------------------------------------------------------------------
