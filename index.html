@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flappy SENAI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Camada de fundo com o SVG da pasta Sprites -->
+  <div class="game-bg" aria-hidden="true"></div>
+
+  <main class="game-shell">
+    <div class="game-view">
+    <canvas id="gameCanvas" width="480" height="720" aria-label="Área do jogo"></canvas>
+
+    <!-- HUD: pontuação e tempo durante a partida -->
+    <header class="hud" id="hud">
+      <div class="hud-item">
+        <span class="hud-label">Pontos</span>
+        <span class="hud-value" id="scoreDisplay">0</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Tempo</span>
+        <span class="hud-value" id="timeDisplay">00:00</span>
+      </div>
+    </header>
+
+    <!-- Tela inicial: aguarda primeiro comando -->
+    <div class="overlay" id="startOverlay">
+      <div class="panel">
+        <h1>Flappy SENAI</h1>
+        <p>Pressione <strong>Espaço</strong> ou <strong>clique</strong> para voar.</p>
+        <p class="hint">Desvie dos canos e não bata no chão nem no teto.</p>
+      </div>
+    </div>
+
+    <!-- Game Over + reiniciar -->
+    <div class="overlay overlay--hidden" id="gameOverOverlay">
+      <div class="panel panel--gameover">
+        <h2>Game Over</h2>
+        <p>Pontuação final: <strong id="finalScore">0</strong></p>
+        <p>Tempo: <strong id="finalTime">00:00</strong></p>
+        <button type="button" class="btn-restart" id="btnRestart">Jogar novamente</button>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
